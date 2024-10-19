@@ -1,0 +1,44 @@
+#SQL injection UNION attack, retrieving data from other tables
+
+#Objectif :  effectuez une attaque UNION d'injection SQL qui récupère tous les noms d'utilisateur et tous les mots de passe, et utilisez les informations pour vous connecter comme administratorl'utilisateur.
+
+Payload pour identifier le nombre de colonne : Pets' UNION SELECT NULL,NULL-- = nous avons deux colonnes 
+
+Payload pour tester le type de la valeur contenu dans chaque colonne que contient la base de donne : Pets' UNION SELECT 'aze','eeg'--
+
+Payload pour avoir les accès de tout les utilisateurs : Pets' UNION SELECT username,password from users --
+
+Se connecter pour solve le alb avec le mot de passe de l'admin :
+
+# Comment le script doit etre ecrit ? : 
+
+        Donc une fonction pour recuperer le nombre de colonnes de la base 
+        Ensuite une autre fonction pour determiner le type des données contenu dans ces colonnes 
+        Une fonction pour lancer lexploit et recuprer le mot de passe de lutilisateur administrator
+        Une fonction pour se connecter a l'admin pour solve le challenge
+
+# Comment le script sera ecrit ? : 
+
+        Une fonction pour lancer les exploits
+
+
+admin_password = soup.body.find(text="administrator").parent.findNext('td').contents[0]
+
+# La commande que tu as fournie est écrite en Python et utilise la bibliothèque Beautiful Soup, 
+qui est couramment utilisée pour le parsing de documents HTML et XML. Voici une explication détaillée
+ de ce que fait chaque partie de cette commande :
+
+    soup.body : Cela accède à l'élément <body> de l'objet soup, qui représente le document HTML ou XML analysé.
+
+    .find(text="administrator") : Cette méthode cherche un texte spécifique, ici "administrator", à 
+    l'intérieur du <body>. Elle renvoie l'élément (ou les éléments) qui contiennent ce texte.
+
+    .parent : Cela accède au parent de l'élément trouvé précédemment. Cela signifie que si "administrator"
+     se trouve dans une cellule de tableau (<td>), le parent sera probablement la ligne de tableau (<tr>).
+
+    .findNext('td') : Cette méthode recherche le prochain élément <td> après l'élément parent trouvé. 
+    Cela est souvent utilisé pour accéder à une autre cellule de tableau dans la même ligne, qui pourrait
+     contenir des données associées.
+
+    .contents[0] : Cette partie accède au premier élément à l'intérieur de l'élément <td> trouvé précédemment.
+     Cela renvoie le contenu (texte, ou parfois un autre élément) de cette cellule.

